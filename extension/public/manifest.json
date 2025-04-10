@@ -1,18 +1,15 @@
 {
   "manifest_version": 3,
-  "name": "ghostPing",
+  "name": "Ghost Ping",
   "version": "1.0.0",
   "description": "Automatically detect and extract professional email addresses from social profiles",
   "permissions": [
     "activeTab",
-    "scripting",
-    "storage"
+    "storage",
+    "scripting"
   ],
   "host_permissions": [
-    "https://*.twitter.com/*",
-    "https://*.x.com/*",
-    "https://*.linkedin.com/*",
-    "https://peerlist.io/*"
+    "https://*.linkedin.com/*"
   ],
   "action": {
     "default_popup": "index.html",
@@ -27,15 +24,22 @@
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
   },
+  "background": {
+    "service_worker": "background.js"
+  },
   "content_scripts": [
     {
       "matches": [
-        "https://*.twitter.com/*",
-        "https://*.x.com/*",
-        "https://*.linkedin.com/*",
-        "https://peerlist.io/*"
+        "https://*.linkedin.com/*"
       ],
-      "js": ["content.js"]
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["content.js", "background.js"],
+      "matches": ["https://*.linkedin.com/*"]
     }
   ]
-} 
+}
